@@ -9,6 +9,8 @@ import {
     Row
 } from 'reactstrap';
 import ApiService from "../../service/ApiService";
+import swal from 'sweetalert';
+
 
 
 class AddUserComponent extends Component{
@@ -16,10 +18,10 @@ class AddUserComponent extends Component{
     constructor(props){
         super(props);
         this.state ={
-            userName: '',
-            password: '',
-            firstName: '',
-            lastName: '',
+            userName: null,
+            password: null,
+            firstName: null,
+            lastName: null,
             age: '',
             salary: '',
             message: null
@@ -37,10 +39,42 @@ class AddUserComponent extends Component{
         console.log('this.state.age = ' + this.state.age);
         console.log('this.state.salary = ' + this.state.salary);
         let user = {userName: this.state.userName, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, age: this.state.age, salary: this.state.salary};
+        console.log('add user res header = ');
         ApiService.addUser(user)
             .then(res => {
-                this.setState({message : 'User added successfully.'});
-                this.props.history.push('/base/tables');
+
+                console.log('add user res header = '+ res.status);
+                //this.setState({message : 'User added successfully.'});
+                if (res.status === 200) {
+
+                    swal({
+                        title: "Done!",
+                        text: "Add User Success",
+                        icon: "success",
+                        button: true
+                    })
+
+                    this.props.history.push('/base/tables');
+                }else{
+                    swal({
+                        title: "Error!",
+                        text: "Add User Fail",
+                        icon: "error",
+                        timer: 2000,
+                        button: false
+                    })
+                }
+                //this.props.history.push('/base/tables');
+            })
+            .catch(err => {
+                swal({
+                    title: "Error!",
+                    text: "Add User Fail " + err,
+                    icon: "error",
+                    button: true
+                })
+                console.log('error = ' + err.status)
+                console.log('error = ' + err)
             });
     }
 

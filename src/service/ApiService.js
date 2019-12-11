@@ -25,7 +25,7 @@ class ApiService {
 
     addUser(user) {
         console.log('addUser = ' + user);
-        return axios.post(""+USER_API_BASE_URL, user);
+        return axios.post(USER_API_BASE_URL, user);
     }
 
     editUser(user) {
