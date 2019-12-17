@@ -13,12 +13,25 @@ import React, { Component } from 'react';
 //     Row,
 //     Table
 // } from 'reactstrap';
-import {Button, Card, CardBody, CardHeader, Col, Row, Table} from "reactstrap";
-import { BootstrapTable, TableHeaderColumn, DeleteButton } from 'react-bootstrap-table';
+import {
+    Button,
+    Card,
+    CardBody,
+    CardHeader,
+    Col,
+    Collapse,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
+    Row,
+    Table, UncontrolledDropdown
+} from "reactstrap";
+import { BootstrapTable, TableHeaderColumn, DeleteButton, InsertButton, ButtonGroup } from 'react-bootstrap-table';
 import ApiService from "../../../service/ApiService";
 import swal from 'sweetalert';
 
 import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
+import {AppSwitch} from "@coreui/react";
 
 // function onRowSelect(row, isSelected, e) {
 //     let rowId = '';
@@ -79,6 +92,7 @@ import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 //         });
 //
 // }
+
 class Tables extends Component {
   constructor(props) {
         super(props)
@@ -95,6 +109,8 @@ class Tables extends Component {
         this.addUser = this.addUser.bind(this);
         this.reloadUserList = this.reloadUserList.bind(this);
         this.customConfirm = this.customConfirm.bind(this);
+        this.editButton = this.editButton.bind(this);
+        //this.onToggleDropDown = this.onToggleDropDown.bind(this);
 
     }
 
@@ -178,6 +194,7 @@ class Tables extends Component {
     }
 
     editUser(id) {
+      //alert('edit = ' + id);
         window.localStorage.setItem("id", id);
         this.props.history.push('/base/edit-user');
     }
@@ -185,6 +202,10 @@ class Tables extends Component {
     addUser() {
         window.localStorage.removeItem("id");
         this.props.history.push('/base/add-user');
+    }
+
+    import() {
+       alert('Import');
     }
 
      // onChange = (e) =>
@@ -230,29 +251,35 @@ class Tables extends Component {
     //         })
     // }
 
-    renderSizePerPageDropDown = props => {
-        return (
-            <div className='btn-group'>
-                {
-                    [ 5, 10, 25, 30, 50 ].map((n, idx) => {
-                        //console.log('props.currSizePerPage = ' + props.currSizePerPage);
-                        const isActive = (n == props.currSizePerPage) ? 'active' : null;
-                        //console.log('isActive = ' + isActive);
-                        return (
-                            <button key={ idx } type='button' className={ `btn btn-light ${isActive}` } onClick={ () => props.changeSizePerPage(n) }>{ n }</button>
-                        );
-                    })
-                }
-            </div>
-        );
-    }
+    // onToggleDropDown = (option) => {
+    //     // do your stuff here
+    //     console.log('toggle dropdown');
+    //     this.props.onSizePerPageList(Number(option.target.value))
+    // }
+    //
+    // renderSizePerPageDropDown = (props) => {
+    //     return (
+    //         <select id='select' name='group' className='form-control input-sm' size='1' onChange={this.onToggleDropDown}>
+    //             <option value='5'>5</option>
+    //             <option value='10'>10</option>
+    //         </select>
+    //     );
+    // }
 
     renderShowsTotal(start, to, total) {
         return (
-            <h6 style={ { color: 'black' } }>
-                From { start } to { to }, Totals is { total }&nbsp;&nbsp;
-            </h6>
+            <span style={ { color: 'black' ,fontSize: 'small' } }>
+                From { start } to { to }, Totals is { total }&nbsp; Rows per page : &nbsp;
+            </span>
         );
+    }
+
+    renderPagination(){
+      return(
+          <span>
+              xxx
+          </span>
+      )
     }
 
     // createCustomToolBar = props => {
@@ -345,6 +372,68 @@ class Tables extends Component {
         );
     }
 
+    createCustomInsertButton = (onClick) => {
+        return (
+            <InsertButton
+                btnText='Add User'
+                btnContextual='btn-warning'
+                className='my-custom-class'
+                btnGlyphicon='fa glyphicon glyphicon-plus fa-plus'
+                onClick={ () => this.handleInsertButtonClick(onClick) }/>
+        );
+    }
+
+    handleInsertButtonClick = (onClick) => {
+        // Custom your onClick event here,
+        // it's not necessary to implement this function if you have no any process before onClick
+        console.log('This is my custom function for InserButton click event');
+        window.localStorage.removeItem("id");
+        this.props.history.push('/base/add-user');
+        //onClick();
+    }
+
+    editButton(cell, row) {
+      console.log('cell + ' + cell);
+      console.log('row + ' + row);
+        return (
+
+                <Button color="primary" size="sm" onClick={() => this.editUser(cell)}>Edit</Button>
+
+        );
+    }
+
+
+
+    createCustomButtonGroup = props => {
+        return (
+            <ButtonGroup className='my-custom-class' sizeClass='btn-group-sm'>
+                { props.insertBtn }
+                { props.deleteBtn }
+                { props.exportCSVBtn }
+                { props.showSelectedOnlyBtn }
+                <button type='button'
+                        className={ 'btn btn-dark' }
+                        onClick={() => this.import()}>
+                    <i className="fa glyphicon glyphicon-import fa-upload"></i>&nbsp;Import
+                </button>
+            </ButtonGroup>
+        );
+    }
+
+    // renderPaginationPanel = (props) => {
+    //     return (
+    //         <div>
+    //
+    //             <div>
+    //                 <span>Change size per page: </span>
+    //                 { props.components.sizePerPageDropdown }
+    //             </div>
+    //
+    //         </div>
+    //     );
+    // }
+
+    // Button color="danger" size="sm" className="btn-pill"
     render() {
 
         // const { currentPage } = this.state;
@@ -354,12 +443,15 @@ class Tables extends Component {
             mode: 'checkbox',
             showOnlySelected: true,
             clickToSelect: true,
-            bgColor: 'yellow',
+            bgColor: '#dafbda',
+            columnWidth: '60px'
             // onSelect: onRowSelect,
             // onSelectAll: onSelectAll
         };
 
         const options = {
+            btnGroup: this.createCustomButtonGroup,
+            //paginationPanel: this.renderPaginationPanel,
             handleConfirmDeleteRow: this.customConfirm,
             searchPosition: 'right',  // right or left
             //toolBar: this.createCustomToolBar,
@@ -389,13 +481,18 @@ class Tables extends Component {
             firstPageTitle: 'Go to first', // First page button title
             lastPageTitle: 'Go to Last', // Last page button title
             paginationShowsTotal: this.renderShowsTotal,  // Accept bool or function
-            paginationPosition: 'both',  // default is bottom, top and both is all available
+            //paginationPosition: this.renderPagination,
+            paginationPosition: 'bottom',  // default is bottom, top and both is all available
+
              keepSizePerPageState: true, //default is false, enable will keep sizePerPage dropdown state(open/clode) when external rerender happened
              //hideSizePerPage: true, // You can hide the dropdown for sizePerPage
              alwaysShowAllBtns: true, // Always show next and previous button
              //withFirstAndLast: true, //> Hide the going to First and Last page button
             // hidePageListOnlyOnePage: true > Hide the page list if only one page.
-            deleteBtn: this.createCustomDeleteButton
+            deleteBtn: this.createCustomDeleteButton,
+            insertBtn: this.createCustomInsertButton,
+            //showTotal: true,
+
         };
 
         return (
@@ -405,32 +502,42 @@ class Tables extends Component {
                         <Card>
                             <CardHeader>
 
-                                <Button color="success" onClick={() => this.addUser()}>
-                                    <i className="fa fa-align-justify"></i>&nbsp;Add User
-                                </Button>
+
+                                <i className="fa fa-align-justify"></i>&nbsp; User
+
+                                {/*<Button color="success" onClick={() => this.addUser()}>*/}
+                                {/*    <i className="fa fa-align-justify"></i>&nbsp;Add User*/}
+                                {/*</Button>*/}
 
                             </CardHeader>
 
-                            <Table hover bordered striped responsive size="sm">
+
+
                             <CardBody>
 
-                                <BootstrapTable data={ this.state.users }
+
+                                <BootstrapTable className='table table-striped table-hover table-sm table-align-middle'
+                                                selectRow={ selectRow } version='4'
+                                                data={ this.state.users }
                                                 pagination={ true }
                                                 options={ options }
-                                                selectRow={ selectRow }
                                                 exportCSV
-                                                deleteRow
-                                                search>
-                                    <TableHeaderColumn dataField='id' isKey={ true }>User ID</TableHeaderColumn>
-                                    <TableHeaderColumn dataField='userName'>User Name</TableHeaderColumn>
-                                    <TableHeaderColumn dataField='firstName'>First Name</TableHeaderColumn>
-                                    <TableHeaderColumn dataField='lastName'>Last Name</TableHeaderColumn>
-                                    <TableHeaderColumn dataField='age'>Age</TableHeaderColumn>
+                                                search
+                                                insertRow
+                                                deleteRow>
+                                    <TableHeaderColumn dataField='id' isKey={ true } dataSort>User ID</TableHeaderColumn>
+                                    <TableHeaderColumn dataField='userName' dataSort>User Name</TableHeaderColumn>
+                                    <TableHeaderColumn dataField='firstName' dataSort>First Name</TableHeaderColumn>
+                                    <TableHeaderColumn dataField='lastName' dataSort>Last Name</TableHeaderColumn>
+                                    <TableHeaderColumn dataField='age' dataSort>Age</TableHeaderColumn>
                                     <TableHeaderColumn dataField='salary'>Salary</TableHeaderColumn>
+                                    <TableHeaderColumn dataField='id' dataFormat={this.editButton}>Action</TableHeaderColumn>
 
                                 </BootstrapTable>
+
                             </CardBody>
-                            </Table>
+
+
                         </Card>
                     </Col>
                 </Row>

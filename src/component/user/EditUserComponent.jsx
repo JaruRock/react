@@ -9,6 +9,7 @@ import {
     Row
 } from 'reactstrap';
 import ApiService from "../../service/ApiService";
+import swal from "sweetalert";
 
 class EditUserComponent extends Component {
 
@@ -55,9 +56,40 @@ class EditUserComponent extends Component {
         let user = {id: this.state.id, userName: this.state.userName, password: this.state.password, firstName: this.state.firstName, lastName: this.state.lastName, age: this.state.age, salary: this.state.salary};
         ApiService.editUser(user)
             .then(res => {
-                this.setState({message : 'User added successfully.'});
-                this.props.history.push('/base/tables');
-            });
+
+                if (res.status === 200) {
+
+                    swal({
+                        title: "Done!",
+                        text: "Update User Success",
+                        icon: "success",
+                        button: true
+                    })
+
+                    this.props.history.push('/base/tables');
+                }else{
+                    swal({
+                        title: "Error!",
+                        text: "Add User Fail",
+                        icon: "error",
+                        timer: 2000,
+                        button: false
+                    })
+                }
+
+                // this.setState({message : 'User added successfully.'});
+                // this.props.history.push('/base/tables');
+            })
+            .catch(err => {
+            swal({
+                title: "Error!",
+                text: "Add User Fail " + err,
+                icon: "error",
+                button: true
+            })
+            console.log('error = ' + err.status)
+            console.log('error = ' + err)
+        });
     }
 
     reset = () => {
