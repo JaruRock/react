@@ -14,9 +14,10 @@ const Paginations = React.lazy(() => import('./views/Base/Paginations'));
 const Popovers = React.lazy(() => import('./views/Base/Popovers'));
 const ProgressBar = React.lazy(() => import('./views/Base/ProgressBar'));
 const Switches = React.lazy(() => import('./views/Base/Switches'));
-const Tables = React.lazy(() => import('./views/Base/Tables'));
+// const Tables = React.lazy(() => import('./views/Base/Tables'));
 const AddUserComponent = React.lazy(() => import('./component/user/AddUserComponent'));
 const EditUserComponent = React.lazy(() => import('./component/user/EditUserComponent'));
+const Tables = React.lazy(() => import('./views/Tables/Tables'));
 const Tabs = React.lazy(() => import('./views/Base/Tabs'));
 const Tooltips = React.lazy(() => import('./views/Base/Tooltips'));
 const BrandButtons = React.lazy(() => import('./views/Buttons/BrandButtons'));
@@ -52,6 +53,7 @@ const routes = [
   { path: '/base/tables', name: 'Tables', component: Tables },
   { path: '/base/add-user', name: 'AddUserComponent', component: AddUserComponent },
   { path: '/base/edit-user', name: 'EditUserComponent', component: EditUserComponent },
+  { path: '/tables/tables', name: 'Tables', component: Tables },
   { path: '/base/tabs', name: 'Tabs', component: Tabs },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },
   { path: '/base/carousels', name: 'Carousel', component: Carousels },

@@ -1,6 +1,11 @@
 import axios from 'axios';
 
 const USER_API_BASE_URL = 'http://localhost:8901/api/v1/users';
+//const USER_LIST_API_URL = 'http://localhost:3000/api/v1/usersList';
+
+const headers = {
+    'Content-Type': 'application/x-www-form-urlencoded'
+};
 
 class ApiService {
 
@@ -26,6 +31,11 @@ class ApiService {
     addUser(user) {
         console.log('addUser = ' + user);
         return axios.post(USER_API_BASE_URL, user);
+    }
+
+    addUserList(userList) {
+        console.log('addUserList = ' + userList);
+        return axios.post(USER_API_BASE_URL + '/list' , userList, headers);
     }
 
     editUser(user) {
