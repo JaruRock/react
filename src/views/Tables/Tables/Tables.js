@@ -110,6 +110,7 @@ class Tables extends Component {
         this.customConfirm = this.customConfirm.bind(this);
         this.editButton = this.editButton.bind(this);
         this.priceFormatter = this.priceFormatter.bind(this);
+        this.handleFiles = this.handleFiles.bind(this);
      //   this.onToggleDropDown = this.onToggleDropDown.bind(this);
 
     }
@@ -137,6 +138,7 @@ class Tables extends Component {
     // }
 
     componentDidMount() {
+      console.log('componentDidMount');
         this.reloadUserList();
     }
 
@@ -259,7 +261,7 @@ class Tables extends Component {
         return (
             <DeleteButton
                 btnText='Delete'
-                btnContextual='btn-danger'
+                btnContextual='btn-warning'
                 className='my-custom-class'
                 btnGlyphicon='fa glyphicon glyphicon-trash fa-trash'
                 />
@@ -270,7 +272,7 @@ class Tables extends Component {
         return (
             <InsertButton
                 btnText='Add User'
-                btnContextual='btn-warning'
+                btnContextual='btn-secondary'
                 className='my-custom-class'
                 btnGlyphicon='fa glyphicon glyphicon-plus fa-plus'
                 onClick={ () => this.handleInsertButtonClick(onClick) }/>
@@ -296,132 +298,46 @@ class Tables extends Component {
         );
     }
 
+    handleFiles(files) {
     // handleFiles = files => {
-    //     let reader = new FileReader();
-    //     reader.onload = function(e) {
-    //         // Use reader.result
-    //         //Split csv file data by new line so that we can skip first row which is header
-    //         let jsonData = reader.result.split('\n');
-    //         let data = [];
-    //         jsonData.forEach((element, index) => {
-    //             if(index) {
-    //                 //Split csv file data by comma so that we will have column data
-    //                 const elementRaw = element.split(',');
-    //                 //console.log(element, index);
-    //                 if(element) {
-    //                     let param = {
-    //                         'user_name' : elementRaw[0],
-    //                         'password' : elementRaw[1],
-    //                         'first_name' : elementRaw[2],
-    //                         'last_name' : elementRaw[3],
-    //                         'age' : elementRaw[4],
-    //                         'salary' : elementRaw[5]
-    //                     }
-    //                     console.log('user_name = ' + elementRaw[0]);
-    //                     console.log('password = ' + elementRaw[1]);
-    //                     console.log('first_name = ' + elementRaw[2]);
-    //                     console.log('last_name = ' + elementRaw[3]);
-    //                     console.log('age = ' + elementRaw[4]);
-    //                     console.log('salary = ' + elementRaw[5]);
-    //
-    //                     // let user = {userName: elementRaw[0], password: elementRaw[1], firstName: elementRaw[2], lastName: elementRaw[3], age: elementRaw[4], salary: elementRaw[5]};
-    //                     // ApiService.addUser(user)
-    //                     //     .then(res => {
-    //                     //
-    //                     //         console.log('add user res header = '+ res.status);
-    //                     //         //this.setState({message : 'User added successfully.'});
-    //                     //         if (res.status === 200) {
-    //                     //
-    //                     //             swal({
-    //                     //                 title: "Done!",
-    //                     //                 text: "Add User Success",
-    //                     //                 icon: "success",
-    //                     //                 button: true
-    //                     //             })
-    //                     //
-    //                     //             // this.props.history.push('/tables/tables');
-    //                     //             //this.reloadUserList();
-    //                     //             console.log('reload list');
-    //                     //             //window.location.reload();
-    //                     //
-    //                     //         }else{
-    //                     //             swal({
-    //                     //                 title: "Error!",
-    //                     //                 text: "Add User Fail",
-    //                     //                 icon: "error",
-    //                     //                 timer: 2000,
-    //                     //                 button: false
-    //                     //             })
-    //                     //         }
-    //                     //         //this.props.history.push('/base/tables');
-    //                     //     })
-    //                     //     .catch(err => {
-    //                     //         swal({
-    //                     //             title: "Error!",
-    //                     //             text: "Add User Fail " + err,
-    //                     //             icon: "error",
-    //                     //             button: true
-    //                     //         })
-    //                     //         console.log('error = ' + err.status)
-    //                     //         console.log('error = ' + err)
-    //                     //     });
-    //                     console.log('data.push(param) = ' + data.push(param));
-    //                     console.log('param = ' + param);
-    //                    data.push(param);
-    //                 }
-    //
-    //                 console.log('reload after import csv');
-    //
-    //             }
-    //         });
-    //         // console.log('reload')
-    //         // this.reloadUserList();
-    //     }
-    //     console.log("TCL: Dashboard -> reader.readyState", reader.readyState)
-    //     // ApiService.fetchUsers()
-    //     //     .then((res) => {
-    //     //         console.log('res.data = ' + res.data);
-    //     //         this.setState({users: res.data})
-    //     //         console.log('cvs res header = '+ res.status);
-    //     //         console.log('reload after import csv')
-    //     //     });
-    //     console.log('end handleFiles')
-    //     reader.readAsText(files[0]);
-    //     // ApiService.fetchUsers()
-    //     //     .then((res) => {
-    //     //         this.setState({users: res.data})
-    //     //         console.log('cvs res header = '+ res.status);
-    //     //         console.log('reload after import csv')
-    //     //     });
-    //     //console.log('end handleFiles')
-    // }
-
-    handleFiles = files => {
+        console.log('start');
         let reader = new FileReader();
         reader.onload = function(e) {
             // Use reader.result
             let csv = reader.result;
+            if (csv.indexOf('"') >= 0) {
+                //do something
+                console.log('contain = ');
+                console.log('csv.replace(/[\'"]+/g, \'\')' + csv.replace(/['"]+/g, ''));
+                csv = csv.replace(/['"]+/g, '');
+            }
+
+            console.log('csv = ' + csv);
             let lines = csv.split("\n");
             let result = [];
             let headers=lines[0].split(",");
+            console.log('headers = ' + headers);
             for(let i=1;i<lines.length;i++){
                 let obj = {};
-                let currentline=lines[i].split(",");
+                let currentLine = lines[i].split(",");
+                console.log('currentLine  = ' + currentLine);
                 for(let j=0;j<headers.length;j++){
-                    obj[headers[j]] = currentline[j];
-                    //console.log('obj[headers[j]] = ' + obj[headers[j]])
+                    obj[headers[j]] = currentLine[j].toString().trim();
                 }
+                //console.log('obj = ' + obj);
                 result.push(obj);
-                //console.log('result.push(obj) = ' + result.push(obj));
             }
             //return result; //JavaScript object
-            result= JSON.stringify(result); //JSON
             console.log(result);
+            //result= JSON.stringify(result); //JSON
 
+            console.log('call api');
             ApiService.addUserList(result)
                 .then(res => {
 
                     console.log('add user res header = '+ res.status);
+                    console.log('add user res header = '+ res.message);
+                    console.log('add user res header = '+ res);
                     //this.setState({message : 'User added successfully.'});
                     if (res.status === 200) {
 
@@ -431,11 +347,13 @@ class Tables extends Component {
                             icon: "success",
                             button: true
                         })
+                            .then((value) => {
+                           // swal(`The returned value is: ${value}`);
+                                console.log('add user list success');
+                                window.location.reload();
+                        });
 
-                        // this.props.history.push('/tables/tables');
-                        //this.reloadUserList();
-                        console.log('reload list');
-                        //window.location.reload();
+                        //this.props.history.push('/tables/tables');
 
                     }else{
                         swal({
@@ -446,23 +364,30 @@ class Tables extends Component {
                             button: false
                         })
                     }
+
+                    console.log(' this.reloadUserList()')
+                    //this.reloadUserList();
+
                     //this.props.history.push('/base/tables');
                 })
                 .catch(err => {
                     swal({
                         title: "Error!",
-                        text: "Add User Fail " + err,
+                        text: "Add User Fail " + err.response.data.message,
                         icon: "error",
                         button: true
                     })
-                    console.log('error = ' + err.status)
-                    console.log('error = ' + err)
-                    console.log('error = ' + err.message)
+                    // console.log('error = ' + err.response.data)
+                    console.log('error = ' + err.response.data.message)
+                    // console.log('error = ' + err)
+                    // console.log('error = ' + err.message)
                 });
 
         }
         reader.readAsText(files[0]);
         console.log('end');
+        // this.reloadUserList();
+
     }
 
     createCustomButtonGroup = props => {
@@ -523,9 +448,6 @@ class Tables extends Component {
     // }
 
     render() {
-
-        // const { currentPage } = this.state;
-        // const { pageStart } = this.state;
 
         const selectRow = {
             mode: 'checkbox',
@@ -611,13 +533,14 @@ class Tables extends Component {
                                                 search
                                                 insertRow
                                                 deleteRow>
-                                    <TableHeaderColumn dataField='id' isKey={ true } dataSort>User ID</TableHeaderColumn>
+                                    <TableHeaderColumn dataField='id' isKey={ true } export={ false } dataSort>User ID</TableHeaderColumn>
                                     <TableHeaderColumn dataField='userName' dataSort>User Name</TableHeaderColumn>
+                                    <TableHeaderColumn dataField='password' hidden export>Password</TableHeaderColumn>
                                     <TableHeaderColumn dataField='firstName' dataSort>First Name</TableHeaderColumn>
                                     <TableHeaderColumn dataField='lastName' dataSort>Last Name</TableHeaderColumn>
                                     <TableHeaderColumn dataField='age' dataSort dataAlign='right'>Age</TableHeaderColumn>
                                     <TableHeaderColumn dataField='salary' dataFormat={this.priceFormatter} dataAlign='right'>Salary</TableHeaderColumn>
-                                    <TableHeaderColumn dataField='id' dataFormat={this.editButton} dataAlign='center'>Action</TableHeaderColumn>
+                                    <TableHeaderColumn dataField='id' dataFormat={this.editButton} dataAlign='center' export={ false }>Action</TableHeaderColumn>
                                 </BootstrapTable>
                             </CardBody>
 

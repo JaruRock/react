@@ -8,8 +8,6 @@ import { AppAsideToggler, AppNavbarBrand, AppSidebarToggler } from '@coreui/reac
 // import sygnet from '../../assets/img/brand/sygnet.svg'
 import logo from './true.png';
 
-console.log(logo);
-
 const propTypes = {
   children: PropTypes.node,
 };
@@ -25,15 +23,13 @@ class DefaultHeader extends Component {
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
-        <AppNavbarBrand
-          full={{ src: logo, width: 60, height: 35, alt: 'True Logo' }}
-          // minimized={{ src: logo, width: 30, height: 30, alt: 'True Logo' }}
-        />
+
         <AppSidebarToggler className="d-md-down-none" display="lg" />
 
         <Nav className="d-md-down-none" navbar>
           <NavItem className="px-3">
-            <NavLink to="/dashboard" className="nav-link" ><span style={{fontWeight: 'bold'}}>SBM Loyalty</span></NavLink>
+              <span style={{fontWeight: 'bold'}}>SBM Loyalty</span>
+            {/*<NavLink to="/dashboard" className="nav-link" ><span style={{fontWeight: 'bold'}}>SBM Loyalty</span></NavLink>*/}
           </NavItem>
           {/*<NavItem className="px-3">*/}
           {/*  <Link to="/users" className="nav-link">Users</Link>*/}
@@ -43,6 +39,10 @@ class DefaultHeader extends Component {
           {/*</NavItem>*/}
         </Nav>
         <Nav className="ml-auto" navbar>
+            <AppNavbarBrand
+                full={{ src: logo, width: 60, height: 35, alt: 'True Logo' }}
+                // minimized={{ src: logo, width: 60, height: 35, alt: 'True Logo' }}
+            />
           {/*<NavItem className="d-md-down-none">*/}
           {/*  <NavLink to="#" className="nav-link"><i className="icon-bell"></i><Badge pill color="danger">5</Badge></NavLink>*/}
           {/*</NavItem>*/}
@@ -73,6 +73,11 @@ class DefaultHeader extends Component {
           {/*  </DropdownMenu>*/}
           {/*</UncontrolledDropdown>*/}
         </Nav>
+
+          {/*<AppNavbarBrand*/}
+          {/*    full={{ src: logo, width: 60, height: 35, alt: 'True Logo' }}*/}
+          {/*    minimized={{ src: logo, width: 60, height: 35, alt: 'True Logo' }}*/}
+          {/*/>*/}
         {/*<AppAsideToggler className="d-md-down-none" />*/}
         {/*<AppAsideToggler className="d-lg-none" mobile />*/}
       </React.Fragment>

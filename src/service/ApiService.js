@@ -1,11 +1,15 @@
 import axios from 'axios';
+// const qs = require('querystring');
+import * as qs from 'query-string';
 
 const USER_API_BASE_URL = 'http://localhost:8901/api/v1/users';
 //const USER_LIST_API_URL = 'http://localhost:3000/api/v1/usersList';
 
-const headers = {
-    'Content-Type': 'application/x-www-form-urlencoded'
-};
+const config = {
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+}
 
 class ApiService {
 
@@ -33,14 +37,21 @@ class ApiService {
         return axios.post(USER_API_BASE_URL, user);
     }
 
+
     addUserList(userList) {
-        console.log('addUserList = ' + userList);
-        return axios.post(USER_API_BASE_URL + '/list' , userList, headers);
+
+        return axios.post(USER_API_BASE_URL + '/list' , userList);
     }
 
     editUser(user) {
         console.log('editUser = ' + user);
         return axios.put(USER_API_BASE_URL + '/' + user.id, user);
+    }
+
+    login(userName, password) {
+        console.log('userName = ' + userName);
+        console.log('password = ' + password);
+        return axios.get(USER_API_BASE_URL);
     }
 
 }
