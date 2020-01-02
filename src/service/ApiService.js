@@ -51,7 +51,7 @@ class ApiService {
     login(userName, password) {
         console.log('userName = ' + userName);
         console.log('password = ' + password);
-        return axios.get(USER_API_BASE_URL);
+        return axios.get(USER_API_BASE_URL + '/login/'+ userName + '/' + password);
     }
 
 }
