@@ -293,7 +293,8 @@ class Tables extends Component {
       // console.log('row + ' + row);
         return (
 
-                <Button color="primary" size="sm" onClick={() => this.editUser(cell)}>Edit</Button>
+            <span className="badge badge-secondary"  onClick={() => this.editUser(cell)} ><i className="fa fa-edit"></i>&nbsp;Edit</span>
+                // <Button color="primary" size="sm" onClick={() => this.editUser(cell)}>Edit</Button>
 
         );
     }

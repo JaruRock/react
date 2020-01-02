@@ -160,6 +160,7 @@ class AddUserComponent extends Component{
                             <CardFooter>
                                 <Button type="submit" size="sm" color="primary" onClick={() => this.saveUser()}><i className="fa fa-dot-circle-o"></i> Submit</Button>
                                 <Button type="reset" size="sm" color="danger" onClick={() => this.reset()}><i className="fa fa-ban"></i> Reset</Button>
+                                <Button type="button" size="sm" color="dark" onClick={() => this.props.history.goBack()}><i className="fa fa-arrow-left"></i> Back</Button>
                             </CardFooter>
                         </Card>
 
