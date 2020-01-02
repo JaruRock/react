@@ -22,7 +22,7 @@ import {
     Row,
     Table, Form, FormGroup, Label, Input, FormText
 } from "reactstrap";
-import { BootstrapTable, TableHeaderColumn, DeleteButton, InsertButton, ButtonGroup, SizePerPageDropDown } from 'react-bootstrap-table';
+import { BootstrapTable, TableHeaderColumn, DeleteButton, InsertButton, ButtonGroup, SizePerPageDropDown, ExportCSVButton, ShowSelectedOnlyButton } from 'react-bootstrap-table';
 import ApiService from "../../../service/ApiService";
 import swal from 'sweetalert';
 import NumberFormat from 'react-number-format';
@@ -261,7 +261,7 @@ class Tables extends Component {
         return (
             <DeleteButton
                 btnText='Delete'
-                btnContextual='btn-warning'
+                btnContextual='btn-light'
                 className='my-custom-class'
                 btnGlyphicon='fa glyphicon glyphicon-trash fa-trash'
                 />
@@ -272,7 +272,7 @@ class Tables extends Component {
         return (
             <InsertButton
                 btnText='Add User'
-                btnContextual='btn-secondary'
+                btnContextual='btn-light'
                 className='my-custom-class'
                 btnGlyphicon='fa glyphicon glyphicon-plus fa-plus'
                 onClick={ () => this.handleInsertButtonClick(onClick) }/>
@@ -286,6 +286,42 @@ class Tables extends Component {
         window.localStorage.removeItem("id");
         this.props.history.push('/base/add-user');
         //onClick();
+    }
+
+    createCustomExportButton = (onClick) => {
+        return (
+            <ExportCSVButton
+                btnText='Export to CSV'
+                btnContextual='btn-light'
+                className='my-custom-class'
+                btnGlyphicon='fa glyphicon glyphicon-export fa-download'
+                onClick={ e => this.handleExportCSVButtonClick(onClick) }/>
+        );
+    }
+
+    handleExportCSVButtonClick = (onClick) => {
+        // Custom your onClick event here,
+        // it's not necessary to implement this function if you have no any process before onClick
+        console.log('This is my custom function for ExportCSVButton click event');
+        onClick();
+    }
+
+    handleShowSelectButtonClick = (onClick) => {
+        // Custom your onClick event here,
+        // it's not necessary to implement this function if you have no any process before onClick
+        console.log('This is my custom function for ShowSelectedOnlyButton click event');
+        onClick();
+    }
+
+    createCustomShowSelectButton = (onClick, showSelected) => {
+        return (
+            <ShowSelectedOnlyButton
+                showAllText='Show All'
+                showOnlySelectText='Show Selected Only'
+                btnContextual='btn-light'
+                className='my-custom-class'
+                onClick={e => this.handleShowSelectButtonClick(onClick)}/>
+        );
     }
 
     editButton(cell, row) {
@@ -407,8 +443,8 @@ class Tables extends Component {
                 {/*<Button color="light">*/}
                     {/*<Input type="file" name="file" id="exampleFile" className={'h-25 d-inline-block' } onClick={() => this.import()} />*/}
                     <ReactFileReader handleFiles={this.handleFiles} fileTypes={'.csv'}>
-                        <Button color="dark" className="btn-square">
-                            <span style={ { color: 'white' ,fontSize: 'smaller' }}><i className="fa glyphicon glyphicon-import fa-upload"></i>&nbsp;Import CSV</span>
+                        <Button color="light" className="btn-square">
+                            <span style={ { color: 'black' ,fontSize: 'smaller' }}><i className="fa glyphicon glyphicon-import fa-upload"></i>&nbsp;Import CSV</span>
                         </Button>
                     </ReactFileReader>
                 {/*</Button>*/}
@@ -503,6 +539,8 @@ class Tables extends Component {
             // hidePageListOnlyOnePage: true > Hide the page list if only one page.
             deleteBtn: this.createCustomDeleteButton,
             insertBtn: this.createCustomInsertButton,
+            exportCSVBtn: this.createCustomExportButton,
+            showSelectedOnlyBtn: this.createCustomShowSelectButton
             //showTotal: true,
 
         };
@@ -540,7 +578,7 @@ class Tables extends Component {
                                     <TableHeaderColumn dataField='firstName' dataSort>First Name</TableHeaderColumn>
                                     <TableHeaderColumn dataField='lastName' dataSort>Last Name</TableHeaderColumn>
                                     <TableHeaderColumn dataField='age' dataSort dataAlign='right'>Age</TableHeaderColumn>
-                                    <TableHeaderColumn dataField='salary' dataFormat={this.priceFormatter} dataAlign='right'>Salary</TableHeaderColumn>
+                                    <TableHeaderColumn dataField='salary' dataSort dataFormat={this.priceFormatter} dataAlign='right'>Salary</TableHeaderColumn>
                                     <TableHeaderColumn dataField='id' dataFormat={this.editButton} dataAlign='center' export={ false }>Action</TableHeaderColumn>
                                 </BootstrapTable>
                             </CardBody>
