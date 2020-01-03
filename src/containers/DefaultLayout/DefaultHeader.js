@@ -28,7 +28,7 @@ class DefaultHeader extends Component {
 
         <Nav className="d-md-down-none" navbar>
           <NavItem className="px-3">
-              <span style={{fontWeight: 'bold'}}>SBM Loyalty</span>
+              <span style={{fontWeight: 'bold'}}>SBM Loyalty Prepaid</span>
             {/*<NavLink to="/dashboard" className="nav-link" ><span style={{fontWeight: 'bold'}}>SBM Loyalty</span></NavLink>*/}
           </NavItem>
           {/*<NavItem className="px-3">*/}

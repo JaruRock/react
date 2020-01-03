@@ -103,7 +103,6 @@ class Tables extends Component {
             pageStart:1,
             pageTo:0,
         }
-       //this.deleteUser = this.deleteUser.bind(this);
         this.editUser = this.editUser.bind(this);
         this.addUser = this.addUser.bind(this);
         this.reloadUserList = this.reloadUserList.bind(this);
@@ -111,31 +110,8 @@ class Tables extends Component {
         this.editButton = this.editButton.bind(this);
         this.priceFormatter = this.priceFormatter.bind(this);
         this.handleFiles = this.handleFiles.bind(this);
-     //   this.onToggleDropDown = this.onToggleDropDown.bind(this);
 
     }
-
-    // handleClick(e, index) {
-    //     console.log('index = ' + index);
-    //     console.log('this.pageSize = '+ this.pageSize);
-    //     console.log('pageTo = ' + (index + 1) * this.pageSize);
-    //     console.log('user list = ' + this.state.users.length);
-    //     e.preventDefault();
-    //
-    //     // const pageTo = 0;
-    //     if((index + 1) * this.pageSize > this.state.users.length){
-    //         this.pageTo = this.state.users.length;
-    //     }else{
-    //         this.pageTo = (index + 1) * this.pageSize;
-    //     }
-    //
-    //     console.log('pageTo = ' + this.pageTo);
-    //
-    //     this.setState({
-    //         currentPage: index
-    //     });
-    //
-    // }
 
     componentDidMount() {
       console.log('componentDidMount');
@@ -147,53 +123,11 @@ class Tables extends Component {
       //console.log('currentPage = ' + this.currentPage);
         ApiService.fetchUsers()
             .then((res) => {
-                // this.pageSize = 10;
-                // this.pageTo = this.pageSize;
-                //
-                // this.pagesCount = Math.ceil(res.data.length / this.pageSize);
-                //  console.log('res.data.result = ' + res.data.length);
-                //  console.log('this.pagesCount = ' + this.pagesCount);
-
                 this.setState({users: res.data})
                 console.log('res header = '+ res.status);
             });
 
     }
-
-    // deleteUser(userId) {
-    //
-    //     swal({
-    //         title: "Are you sure?",
-    //         text: "You want to delete this user?",
-    //         icon: "warning",
-    //         buttons: true,
-    //         dangerMode: true,
-    //     })
-    //
-    //         .then(willDelete => {
-    //             if (willDelete) {
-    //                 ApiService.deleteUser(userId)
-    //                     .then(res => {
-    //                         swal({
-    //                             title: "Done!",
-    //                             text: "User " +userId+ " is deleted",
-    //                             icon: "success",
-    //                             button: true
-    //                         })
-    //
-    //                         //this.reloadUserList();
-    //                         // this.setState({users: this.state.users.filter(user => user.id !== userId)});
-    //                     });
-    //             }
-    //         });
-    //
-    //     // ApiService.deleteUser(userId)
-    //     //     .then(res => {
-    //     //         this.setState({message : 'User deleted successfully.'});
-    //     //         this.setState({users: this.state.users.filter(user => user.id !== userId)});
-    //     //     })
-    //
-    // }
 
     editUser(id) {
       //alert('edit = ' + id);
@@ -401,11 +335,6 @@ class Tables extends Component {
                             button: false
                         })
                     }
-
-                    console.log(' this.reloadUserList()')
-                    //this.reloadUserList();
-
-                    //this.props.history.push('/base/tables');
                 })
                 .catch(err => {
                     swal({
@@ -414,16 +343,11 @@ class Tables extends Component {
                         icon: "error",
                         button: true
                     })
-                    // console.log('error = ' + err.response.data)
-                    console.log('error = ' + err.response.data.message)
-                    // console.log('error = ' + err)
-                    // console.log('error = ' + err.message)
                 });
 
         }
         reader.readAsText(files[0]);
         console.log('end');
-        // this.reloadUserList();
 
     }
 

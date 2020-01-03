@@ -18,6 +18,7 @@ const Switches = React.lazy(() => import('./views/Base/Switches'));
 const AddUserComponent = React.lazy(() => import('./component/user/AddUserComponent'));
 const EditUserComponent = React.lazy(() => import('./component/user/EditUserComponent'));
 const Tables = React.lazy(() => import('./views/Tables/Tables'));
+const Multiplier = React.lazy(() => import('./views/Tables/Multiplier'));
 const Tabs = React.lazy(() => import('./views/Base/Tabs'));
 const Tooltips = React.lazy(() => import('./views/Base/Tooltips'));
 const BrandButtons = React.lazy(() => import('./views/Buttons/BrandButtons'));
@@ -54,6 +55,7 @@ const routes = [
   { path: '/base/add-user', name: 'AddUserComponent', component: AddUserComponent },
   { path: '/base/edit-user', name: 'EditUserComponent', component: EditUserComponent },
   { path: '/tables/tables', name: 'Tables', component: Tables },
+  { path: '/tables/multiplier', name: 'Multiplier', component: Multiplier },
   { path: '/base/tabs', name: 'Tabs', component: Tabs },
   { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },
   { path: '/base/carousels', name: 'Carousel', component: Carousels },

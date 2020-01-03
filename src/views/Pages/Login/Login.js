@@ -27,70 +27,6 @@ import * as Yup from 'yup';
 
 class Login extends Component {
 
-  // constructor(props){
-  //   super(props);
-  //   this.state ={
-  //     userName: '',
-  //     password: ''
-  //   }
-  //   this.login = this.login.bind(this);
-  // }
-
-  // login = (e) => {
-  //   console.log('login');
-  //
-  //
-  //   ApiService.login(this.state.userName, this.state.password)
-  //       .then(res => {
-  //
-  //         // console.log('add user res header = '+ res.status);
-  //         // console.log('add user res userName = '+ res.userName);
-  //         // console.log('add user res userName = '+ res.data.password);
-  //         // console.log('add user res userName = '+ res.login);
-  //         console.log('add user res userName = '+ res.data.login);
-  //         //console.log('add user res userName = '+ res.data);
-  //
-  //         //this.setState({message : 'User added successfully.'});
-  //         if (res.status === 200 && res.data.login === true) {
-  //
-  //           swal({
-  //             title: "Welcome!",
-  //             text: "User : " + this.state.userName,
-  //             icon: "success",
-  //             timer: 2000,
-  //             button: false
-  //           })
-  //
-  //           this.props.history.push('/dashboard');
-  //         }else{
-  //           swal({
-  //             title: "Error!",
-  //             text: "Login Fail",
-  //             icon: "error",
-  //             timer: 2000,
-  //             button: false
-  //           })
-  //         }
-  //         //this.props.history.push('/base/tables');
-  //       })
-  //       .catch(err => {
-  //         swal({
-  //           title: "Error!",
-  //           text: "Login Fail " + err,
-  //           icon: "error",
-  //           button: true
-  //         })
-  //         console.log('error = ' + err.status)
-  //         console.log('error = ' + err)
-  //       });
-  // }
-
-  // onChange = (e) =>
-  //     this.setState({ [e.target.name]: e.target.value });
-
-
-
-
   render() {
     return (
 
@@ -122,54 +58,47 @@ class Login extends Component {
             })}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
-                //alert(JSON.stringify(values, null, 2));
-                // alert('userName = ' + values.userName);
-                // alert('password = ' + values.password);
 
-                ApiService.login(values.userName, values.password)
-                      .then(res => {
-
-                        // console.log('add user res header = '+ res.status);
-                        // console.log('add user res userName = '+ res.userName);
-                        // console.log('add user res userName = '+ res.data.password);
-                        // console.log('add user res userName = '+ res.login);
-                        console.log('add user res userName = '+ res.data.login);
-                        //console.log('add user res userName = '+ res.data);
-
-                        //this.setState({message : 'User added successfully.'});
-                        if (res.status === 200 && res.data.login === true) {
-
-                          swal({
-                            title: "Welcome!",
-                            text: "User : " + values.userName,
-                            icon: "success",
-                            timer: 2000,
-                            button: false
-                          })
-
-                          this.props.history.push('/dashboard');
-                        }else{
-                          swal({
-                            title: "Error!",
-                            text: "Login Fail",
-                            icon: "error",
-                            timer: 2000,
-                            button: false
-                          })
-                        }
-                        //this.props.history.push('/base/tables');
-                      })
-                      .catch(err => {
-                        swal({
-                          title: "Error!",
-                          text: "Login Fail " + err,
-                          icon: "error",
-                          button: true
-                        })
-                        console.log('error = ' + err.status)
-                        console.log('error = ' + err)
-                      });
-
+                // ApiService.login(values.userName, values.password)
+                //       .then(res => {
+                //         console.log('add user res userName = '+ res.data.login);
+                //         if (res.status === 200 && res.data.login === true) {
+                //           swal({
+                //             title: "Welcome!",
+                //             text: "User : " + values.userName,
+                //             icon: "success",
+                //             timer: 2000,
+                //             button: false
+                //           })
+                //           this.props.history.push('/dashboard');
+                //         }else{
+                //           swal({
+                //             title: "Error!",
+                //             text: "Login Fail",
+                //             icon: "error",
+                //             timer: 2000,
+                //             button: false
+                //           })
+                //         }
+                //       })
+                //       .catch(err => {
+                //         swal({
+                //           title: "Error!",
+                //           text: "Login Fail " + err,
+                //           icon: "error",
+                //           button: true
+                //         })
+                //         console.log('error = ' + err.status)
+                //         console.log('error = ' + err)
+                //       });
+                swal({
+                              title: "Welcome!",
+                              text: "User : " + values.userName,
+                              icon: "success",
+                              timer: 2000,
+                              button: false
+                            })
+                this.props.history.push('/dashboard');
                 setSubmitting(false);
               }, 1000);
             }}

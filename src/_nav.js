@@ -37,7 +37,7 @@ export default {
       },
     },
     {
-      name: 'Tables',
+      name: 'Config',
       url: '/tables',
       icon: 'nav-icon icon-list',
       children: [
